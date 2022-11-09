@@ -13,7 +13,7 @@ struct node {
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
 No *abb_cria_no(int chave, char conteudo) {
-  if (chave == NULL || conteudo == NULL) {
+  if (chave < 0 || conteudo == NULL) {
     return NULL;
   } else {
     No *no = (No *)malloc(sizeof(No));
@@ -159,7 +159,7 @@ char *abb_pos_ordem(No *no) {
 char *emOrdemConc(No *no, char concatenacao) {
   if (no != NULL) {
     emOrdemConc(no->esq, concatenacao);
-    concatenacao += no->conteudo;
+    strcat(concatenacao, no->conteudo);
     emOrdemConc(no->dir, concatenacao);
   }
 }
