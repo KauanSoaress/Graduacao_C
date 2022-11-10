@@ -8,6 +8,7 @@ struct node {
   char conteudo;
   No *esq;
   No *dir;
+  No *pai;
 };
 
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
@@ -21,6 +22,7 @@ No *abb_cria_no(int chave, char conteudo) {
     no->conteudo = conteudo;
     no->esq = NULL;
     no->dir = NULL;
+    no->pai = NULL;
     return no;
   }
 }
@@ -51,29 +53,34 @@ char abb_conteudo_no(No *no) {
  * resultante ou NULL caso (i) a raiz e o nó sejam NULL e (ii) caso o nó possua
  * mesma chave que outro nó previamente inserido na árvore. */
 No *abb_insere_no(No *raiz, No *no) {
-  No *auxiliarY = NULL;
-  No *auxiliarX = raiz;
-  while (auxiliarX != NULL) {
-    auxiliarY = auxiliarX;
-    if (no->chave <= auxiliarX->chave) {
-      auxiliarX = auxiliarX->esq;
-    }
-    else {
-      auxiliarX = auxiliarX->chave;
-    }
-  }
-  if (no->chave == auxiliarY->chave) {
+  if (raiz == NULL && no == NULL) {
     return NULL;
   }
-  else if (no->chave <= auxiliarY->chave) {
+
+  No *auxiliarY = NULL;
+  No *auxiliarX = raiz;
+
+  while (auxiliarX != NULL) {
+    auxiliarY = auxiliarX;
+    if (no->chave < auxiliarX->chave) {
+      auxiliarX = auxiliarX->esq;
+    }
+    else if (no->chave > auxiliarX->chave) {
+      auxiliarX = auxiliarX->dir;
+    }
+    else if (no->chave == auxiliarY->chave){
+      return NULL;
+    }
+  }
+  if (no->chave <= auxiliarY->chave) {
     auxiliarY->esq = no;
   }
   else {
     auxiliarY->dir = no;
   }
-  if (raiz == NULL && no == NULL) {
-    return NULL;
-  }
+
+  no->pai = auxiliarY;
+
   return raiz;
 
 }
@@ -131,6 +138,18 @@ int abb_numero(No *raiz) {
     return NULL;
   }
   int quant = 0;
+
+  No *x = raiz;
+
+  if (x->esq != NULL) {
+    x = minimo(x->esq);
+    quant += 1;
+  }
+  while (sucessor(x) != NULL) {
+    x = sucessor(x);
+    quant += 1;
+  }
+  return quant;
 }
 
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em pré-ordem à
@@ -147,7 +166,15 @@ char *abb_ordem(No *no) {
   }
   char concatenacao = ' ';
   
-  return emOrdemConc(no, concatenacao);
+  if (no->esq != NULL) {
+    no = minimo(no->esq);
+    strcat(concatenacao, no->conteudo);
+  }
+  while (sucessor(no) != NULL) {
+    no = sucessor(no);
+    strcat(concatenacao, no->conteudo);
+  }
+  return concatenacao;
 }
 
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em pós-ordem à
@@ -156,10 +183,26 @@ char *abb_pos_ordem(No *no) {
   return "&";
 }
 
-char *emOrdemConc(No *no, char concatenacao) {
-  if (no != NULL) {
-    emOrdemConc(no->esq, concatenacao);
-    strcat(concatenacao, no->conteudo);
-    emOrdemConc(no->dir, concatenacao);
+No *sucessor(No *no) {
+  No *aux, *y;
+  if (no->dir != NULL) {
+    aux = no->dir;
+    while (aux->esq != NULL) {
+      aux = aux->esq;
+      return aux;
+    }
   }
+  y = no->pai;
+  while (y != NULL && no == y->dir) {
+    no = y;
+    y = no->pai;
+  }
+  return y;
+}
+
+No *minimo (No *no) {
+  while (no->esq != NULL) {
+    no = no->esq;
+  }
+  return no;
 }

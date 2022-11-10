@@ -1,7 +1,9 @@
 /* TAD: No (chave, conteudo, esq, dir) */
 typedef struct node No;
 
-char *emOrdemConc(No *no, char concatenacao);
+No *sucessor(No *no);
+
+No *minimo (No *no);
 
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
