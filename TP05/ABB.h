@@ -5,6 +5,9 @@ No *sucessor(No *no);
 
 No *minimo (No *no);
 
+char *preOrdem(No *no, char concat);
+char *posOrdem(No *no, char concat);
+
 /* Aloca e retorna um No com os dados passados por parâmetro. Retorna no nó
  * criado ou NULL caso não seja posivel criar o nó. */
 No *abb_cria_no(int chave, char conteudo);

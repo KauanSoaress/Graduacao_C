@@ -30,7 +30,20 @@ No *abb_cria_no(int chave, char conteudo) {
 /* Libera a memória de um nó e toda as suas sub-árvores. Retorna 1 se for
  * possivel fazer a liberação ou 0 caso o nó seja NULL. */
 int abb_libera_no(No *no) {
-  return NULL;
+  if (no == NULL) {
+    return NULL;
+  }
+
+  No *proxEsq = no->esq;
+  No *proxDir = no->dir;
+  free(no);  
+
+  while (proxEsq != NULL || proxDir != NULL) {
+    abb_libera_no(proxEsq);
+    abb_libera_no(proxDir);
+  }
+
+  return 1;
 }
 
 /* Retorna a chave do nó ou -1 caso o nó seja NULL.  */
@@ -100,7 +113,6 @@ No *abb_busca_no(No *raiz, int chave) {
   return aux;
 }
 
-
 /* Remove o nó com a chave fornecida. Retorna a raiz da arvore atualizada ou
  * NULL em caso a raiz fornecida seja NULL. */
 No *abb_remove_no(No *raiz, int chave) {
@@ -128,11 +140,21 @@ No *abb_remove_no(No *raiz, int chave) {
 /* Retorna a altura da árvore ou -1 caso araiz seja NULL. */
 int abb_altura(No *raiz) {
   if (raiz == NULL) {
-    return NULL;
+    return -1;
+  }
+
+  int alturaEsq = altura (raiz->esq);
+  int alturaDir = altura (raiz->dir);
+
+  if (alturaEsq < alturaDir) {
+    return alturaDir + 1;
+  }
+  else {
+    return alturaEsq + 1;
   }
 }
 
-/* Retorna o número de nós da árvore ou -1 caso araiz seja NULL. */
+/* Retorna o número de nós da árvore ou -1 caso a raiz seja NULL. */
 int abb_numero(No *raiz) {
   if (raiz == NULL) {
     return NULL;
@@ -155,7 +177,12 @@ int abb_numero(No *raiz) {
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em pré-ordem à
  * partir do nó ou '#' caso o nó seja NULL. */
 char *abb_pre_ordem(No *no) {
-  return "&";
+  if (no == NULL) {
+      return '#';
+  }
+  char concatenacao = ' ';
+
+  return preOrdem(no, concatenacao);
 }
 
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em ordem à
@@ -180,7 +207,12 @@ char *abb_ordem(No *no) {
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em pós-ordem à
  * partir do nó ou '#' caso o nó seja NULL. */
 char *abb_pos_ordem(No *no) {
-  return "&";
+  if (no == NULL) {
+      return '#';
+  }
+  char concatenacao = ' ';
+
+  return posOrdem(no, concatenacao);
 }
 
 No *sucessor(No *no) {
@@ -205,4 +237,20 @@ No *minimo (No *no) {
     no = no->esq;
   }
   return no;
+}
+
+char *preOrdem(No *no, char concat) {
+  strcat(concat, no->conteudo);
+  preOrdem(no->esq, concat);
+  preOrdem(no->dir, concat);
+
+  return concat;
+}
+
+char *preOrdem(No *no, char concat) {
+  preOrdem(no->esq, concat);
+  preOrdem(no->dir, concat);
+  strcat(concat, no->conteudo);
+
+  return concat;
 }
