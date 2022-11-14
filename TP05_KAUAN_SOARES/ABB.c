@@ -140,7 +140,7 @@ No *abb_remove_no(No *raiz, int chave) {
     remover = aux->dir;
     aux->dir = NULL;
   }
-  return remover;
+  return raiz;
 }
 
 /* Retorna a altura da árvore ou -1 caso araiz seja NULL. */
