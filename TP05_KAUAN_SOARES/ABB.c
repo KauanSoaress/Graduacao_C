@@ -37,9 +37,10 @@ int abb_libera_no(No *no) {
   No *proxEsq = no->esq;
   No *proxDir = no->dir;
   free(no);  
-
-  while (proxEsq != NULL || proxDir != NULL) {
+  if (proxEsq != NULL) {
     abb_libera_no(proxEsq);
+  }
+  if (proxDir != NULL){
     abb_libera_no(proxDir);
   }
 
@@ -69,7 +70,6 @@ No *abb_insere_no(No *raiz, No *no) {
   if (raiz == NULL && no == NULL) {
     return NULL;
   }
-
   No *auxiliarY = NULL;
   No *auxiliarX = raiz;
 
@@ -85,17 +85,20 @@ No *abb_insere_no(No *raiz, No *no) {
       return NULL;
     }
   }
-  if (no->chave <= auxiliarY->chave) {
-    auxiliarY->esq = no;
+  if (raiz != NULL) {
+    if (no->chave < auxiliarY->chave) {
+      auxiliarY->esq = no;
+    }
+    else {
+      auxiliarY->dir = no;
+    }
+
+    no->pai = auxiliarY;
   }
   else {
-    auxiliarY->dir = no;
+    raiz = no;
   }
-
-  no->pai = auxiliarY;
-
   return raiz;
-
 }
 
 /* Procura o nó pela chave. Retorna o nó caso a busca obtenha sucesso ou NULL
@@ -116,6 +119,9 @@ No *abb_busca_no(No *raiz, int chave) {
 /* Remove o nó com a chave fornecida. Retorna a raiz da arvore atualizada ou
  * NULL em caso a raiz fornecida seja NULL. */
 No *abb_remove_no(No *raiz, int chave) {
+  if (raiz == NULL) {
+    return NULL;
+  }
   No *aux = raiz;
   while (aux != NULL && aux->chave != chave) {
     if (aux->chave > chave) {
@@ -180,9 +186,9 @@ char *abb_pre_ordem(No *no) {
   if (no == NULL) {
       return "#";
   }
-  char concatenacao = ' ';
+  char *concatenacao;
 
-  return preOrdem(no, &concatenacao);
+  return preOrdem(no, concatenacao);
 }
 
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em ordem à
@@ -210,7 +216,7 @@ char *abb_pos_ordem(No *no) {
   if (no == NULL) {
       return "#";
   }
-  char *concatenacao;
+  char concatenacao[100];
 
   return posOrdem(no, concatenacao);
 }
@@ -218,11 +224,7 @@ char *abb_pos_ordem(No *no) {
 No *sucessor(No *no) {
   No *aux, *y;
   if (no->dir != NULL) {
-    aux = no->dir;
-    while (aux->esq != NULL) {
-      aux = aux->esq;
-      return aux;
-    }
+    return minimo(no->dir);
   }
   y = no->pai;
   while (y != NULL && no == y->dir) {

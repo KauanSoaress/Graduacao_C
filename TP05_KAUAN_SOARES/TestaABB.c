@@ -304,25 +304,45 @@ void testa_pos_ordem_nulos(){
 }
 
 int main() {
+  printf("=-=-=-=-=-= Bateria de testes 1 =-=-=-=-=-=-=\n");
   testa_acessa_validos();
+  printf("=-=-=-=-=-= Bateria de testes 2 =-=-=-=-=-=-=\n");
   testa_acessa_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 3 =-=-=-=-=-=-=\n");
   testa_insere_validos();
+  printf("=-=-=-=-=-= Bateria de testes 4 =-=-=-=-=-=-=\n");
   testa_insere_invalidos_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 5 =-=-=-=-=-=-=\n");
   testa_busca_validos();
+  printf("=-=-=-=-=-= Bateria de testes 6 =-=-=-=-=-=-=\n");
   testa_busca_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 7 =-=-=-=-=-=-=\n");
   testa_libera_validos();
+  printf("=-=-=-=-=-= Bateria de testes 8 =-=-=-=-=-=-=\n");
   testa_libera_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 9 =-=-=-=-=-=-=\n");
   testa_remove_validos();
+  printf("=-=-=-=-=-= Bateria de testes 10 =-=-=-=-=-=-=\n");
   testa_remove_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 11 =-=-=-=-=-=-=\n");
   testa_altura_validos();
+  printf("=-=-=-=-=-= Bateria de testes 12 =-=-=-=-=-=-=\n");
   testa_altura_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 13 =-=-=-=-=-=-=\n");
   testa_numero_validos();
+  printf("=-=-=-=-=-= Bateria de testes 14 =-=-=-=-=-=-=\n");
   testa_numero_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 15 =-=-=-=-=-=-=\n");
   testa_pre_ordem_validos();
+  printf("=-=-=-=-=-= Bateria de testes 16 =-=-=-=-=-=-=\n");
   testa_pre_ordem_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 17 =-=-=-=-=-=-=\n");
   testa_ordem_validos();
+  printf("=-=-=-=-=-= Bateria de testes 18 =-=-=-=-=-=-=\n");
   testa_ordem_nulos();
+  printf("=-=-=-=-=-= Bateria de testes 19 =-=-=-=-=-=-=\n");
   testa_pos_ordem_validos();
+  printf("=-=-=-=-=-= Bateria de testes 20 =-=-=-=-=-=-=\n");
   testa_pos_ordem_nulos();
   return 0;
 }

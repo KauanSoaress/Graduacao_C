@@ -7,8 +7,8 @@ Uma árvore binária é uma estrutura de dados caracterizada por (i) não ter el
 
 **OBS**: *Comandos para compilação em separado dos módulos do programa via linha de comando*:
 ```
-$ gcc -c ABB.c -o ABB.o
-$ gcc -c TestaABB.c -o TestaABB.o
-$ gcc -o TestaABB.bin ABB.o TestaABB.o
-$ ./TestaABB.bin
+gcc -c ABB.c -o ABB.o
+gcc -c TestaABB.c -o TestaABB.o
+gcc -o TestaABB.exe ABB.o TestaABB.o
+./TestaABB.exe
 ```
