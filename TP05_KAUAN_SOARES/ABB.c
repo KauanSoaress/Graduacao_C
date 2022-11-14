@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+char auxiliarPreOrdem[30], concatPreOrdem[30];
+char auxiliarEmOrdem[30], concatEmOrdem[30];
+char auxiliarPosOrdem[30], concatPosOrdem[30];
+
 struct node {
   int chave;
   char conteudo;
@@ -126,8 +130,7 @@ No *abb_remove_no(No *raiz, int chave) {
   while (aux != NULL && aux->chave != chave) {
     if (aux->chave > chave) {
       aux = aux->esq;
-    }
-    else if (aux->chave < chave) {
+    } else if (aux->chave < chave) {
       aux = aux->dir;
     }
   }
@@ -135,12 +138,11 @@ No *abb_remove_no(No *raiz, int chave) {
   if (aux->esq->chave == chave) {
     remover = aux->esq;
     aux->esq = NULL;
-  }
-  else if (aux->dir->chave == chave) {
+  } else if (aux->dir->chave == chave) {
     remover = aux->dir;
     aux->dir = NULL;
   }
-  return raiz;
+  return remover;
 }
 
 /* Retorna a altura da árvore ou -1 caso araiz seja NULL. */
@@ -186,9 +188,14 @@ char *abb_pre_ordem(No *no) {
   if (no == NULL) {
       return "#";
   }
-  char *concatenacao;
-
-  return preOrdem(no, concatenacao);
+  
+  if(no!=NULL){
+    strcpy(auxiliarPreOrdem,&no->conteudo);
+    strcat(concatPreOrdem,auxiliarPreOrdem);
+    abb_pre_ordem(no->esq);
+    abb_pre_ordem(no->dir);    
+  }   
+  return concatPreOrdem;
 }
 
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em ordem à
@@ -197,17 +204,18 @@ char *abb_ordem(No *no) {
   if (no == NULL) {
       return "#";
   }
-  char *concatenacao;
   
   if (no->esq != NULL) {
     no = minimo(no->esq);
-    strcat(concatenacao, &no->conteudo);
+    strcpy(auxiliarEmOrdem,&no->conteudo);
+    strcat(concatEmOrdem,auxiliarEmOrdem);
   }
   while (sucessor(no) != NULL) {
     no = sucessor(no);
-    strcat(concatenacao, &no->conteudo);
+    strcpy(auxiliarPosOrdem,&no->conteudo);
+    strcat(concatEmOrdem,auxiliarPosOrdem);
   }
-  return concatenacao;
+  return concatEmOrdem;
 }
 
 /*Retorna a concatenação do conteúdo da árvore fazendo percurso em pós-ordem à
@@ -216,9 +224,13 @@ char *abb_pos_ordem(No *no) {
   if (no == NULL) {
       return "#";
   }
-  char concatenacao[100];
-
-  return posOrdem(no, concatenacao);
+  if(no!=NULL){
+    abb_pos_ordem(no->esq);
+    abb_pos_ordem(no->dir);    
+    strcpy(auxiliarPosOrdem,&no->conteudo);
+    strcat(concatPosOrdem,auxiliarPosOrdem);
+  }   
+  return concatPosOrdem;
 }
 
 No *sucessor(No *no) {
@@ -234,25 +246,24 @@ No *sucessor(No *no) {
   return y;
 }
 
-No *minimo (No *no) {
+No *minimo(No *no) {
   while (no->esq != NULL) {
     no = no->esq;
   }
   return no;
 }
 
-char *preOrdem(No *no, char *concat) {
-  strcat(concat, &no->conteudo);
-  preOrdem(no->esq, concat);
-  preOrdem(no->dir, concat);
-
-  return concat;
-}
-
-char *posOrdem(No *no, char *concat) {
-  preOrdem(no->esq, concat);
-  preOrdem(no->dir, concat);
-  strcat(concat, &no->conteudo);
-
-  return concat;
+void Transplantar(No *raiz, No *no1, No *no2) {
+  if (no1->pai == NULL) {
+    raiz = no1;
+  }
+  else if (no1 == no1->pai->esq) {
+    no1->pai->esq = no2;
+  }
+  else {
+    no1->pai->dir = no2;
+  }
+  if (no2 != NULL) {
+    no2->pai = no1->pai;
+  }
 }
