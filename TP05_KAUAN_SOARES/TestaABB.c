@@ -1,3 +1,6 @@
+/*Não passam nos testes dos percursos com dados válidos por causa de erro no trabalho com char*/
+/* Testes disponibilizados pelo João Lucas */
+
 #include "ABB.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -146,8 +149,7 @@ void testa_remove_validos() {
   raiz = abb_insere_no(raiz, no3);
   raiz = abb_insere_no(raiz, no4);
   raiz = abb_insere_no(raiz, no5);
-  raiz = abb_remove_no(raiz, 3);
-  if(abb_busca_no(raiz,3)==NULL){
+  if(abb_remove_no(raiz, 3) == no3){
     printf("[passou]abb_remove_no-validos\n");
   }else{
     printf("[falhau]abb_remove_no-validos\n");
@@ -259,7 +261,7 @@ void testa_ordem_validos(){
   raiz = abb_insere_no(raiz, no3);
   raiz = abb_insere_no(raiz, no4);
   raiz = abb_insere_no(raiz, no5);
-  if(strcmp(abb_pre_ordem(raiz),"ksiED")==0){
+  if(strcmp(abb_ordem(raiz),"ksiED")==0){
     printf("[passou]abb_ordem-validos\n");
   }else{
     printf("[falhou]abb_ordem-validos\n");
@@ -268,7 +270,7 @@ void testa_ordem_validos(){
 
 void testa_ordem_nulos(){
   No* raiz=NULL;
-  if(strcmp(abb_pre_ordem(raiz),"#")==0){
+  if(strcmp(abb_ordem(raiz),"#")==0){
     printf("[passou]abb_ordem-nulos\n");
   }else{
     printf("[falhou]abb_ordem-nulos\n");
@@ -287,7 +289,7 @@ void testa_pos_ordem_validos(){
   raiz = abb_insere_no(raiz, no3);
   raiz = abb_insere_no(raiz, no4);
   raiz = abb_insere_no(raiz, no5);
-  if(strcmp(abb_pre_ordem(raiz),"kisDE")==0){
+  if(strcmp(abb_pos_ordem(raiz),"kisDE")==0){
     printf("[passou]abb_pos_ordem-validos\n");
   }else{
     printf("[falhou]abb_pos_ordem-validos\n");
@@ -296,7 +298,7 @@ void testa_pos_ordem_validos(){
 
 void testa_pos_ordem_nulos(){
   No* raiz=NULL;
-  if(strcmp(abb_pre_ordem(raiz),"#")==0){
+  if(strcmp(abb_pos_ordem(raiz),"#")==0){
     printf("[passou]abb_pos_ordem-nulos\n");
   }else{
     printf("[falhou]abb_pos_ordem-nulos\n");
