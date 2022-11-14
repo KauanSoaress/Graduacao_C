@@ -251,19 +251,4 @@ No *minimo(No *no) {
     no = no->esq;
   }
   return no;
-}
-
-void Transplantar(No *raiz, No *no1, No *no2) {
-  if (no1->pai == NULL) {
-    raiz = no1;
   }
-  else if (no1 == no1->pai->esq) {
-    no1->pai->esq = no2;
-  }
-  else {
-    no1->pai->dir = no2;
-  }
-  if (no2 != NULL) {
-    no2->pai = no1->pai;
-  }
-}

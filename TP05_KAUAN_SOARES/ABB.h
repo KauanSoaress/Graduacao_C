@@ -5,8 +5,6 @@ No *sucessor(No *no);
 
 No *minimo(No *no);
 
-void Transplantar(No *raiz, No *no1, No *no2);
-
 char *preOrdem(No *no, char *concat);
 char *posOrdem(No *no, char *concat);
 

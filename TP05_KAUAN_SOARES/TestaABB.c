@@ -1,4 +1,3 @@
-/*Não passam nos testes dos percursos com dados válidos por causa de erro no trabalho com char*/
 /* Testes disponibilizados pelo João Lucas */
 
 #include "ABB.h"
@@ -149,7 +148,8 @@ void testa_remove_validos() {
   raiz = abb_insere_no(raiz, no3);
   raiz = abb_insere_no(raiz, no4);
   raiz = abb_insere_no(raiz, no5);
-  if(abb_remove_no(raiz, 3) == no3){
+  raiz = abb_remove_no(raiz, 3);
+  if(abb_busca_no(raiz,3)==NULL){
     printf("[passou]abb_remove_no-validos\n");
   }else{
     printf("[falhau]abb_remove_no-validos\n");
